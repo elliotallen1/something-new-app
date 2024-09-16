@@ -34,10 +34,12 @@ class ToDoListTask extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () {
+      onTap: !completed 
+      ? () {
         onListChanged(task, completed);
-      },
-      onLongPress: completed
+      }
+      : null,
+      onLongPress: !completed
           ? () {
               onDeleteTask(task);
             }

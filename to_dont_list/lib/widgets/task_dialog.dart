@@ -30,7 +30,7 @@ class _TaskDialogState extends State<TaskDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Complete Task: ${widget.task.name}'),
+      title: Text('How was ${widget.task.name}?'),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -38,9 +38,9 @@ class _TaskDialogState extends State<TaskDialog> {
           const Text('Rate this task:'),
           Slider(
             value: _rating.toDouble(),
-            min: 1,
+            min: 0,
             max: 5,
-            divisions: 4,
+            divisions: 5,
             label: '$_rating',
             onChanged: (value) {
               setState(() {
