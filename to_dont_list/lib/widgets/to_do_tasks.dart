@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:to_dont_list/objects/item.dart';
+import 'package:to_dont_list/objects/task.dart';
 
-typedef ToDoListChangedCallback = Function(Item item, bool completed);
-typedef ToDoListRemovedCallback = Function(Item item);
+typedef ToDoListChangedCallback = Function(Task task, bool completed);
+typedef ToDoListRemovedCallback = Function(Task task);
 
-class ToDoListItem extends StatelessWidget {
-  ToDoListItem(
-      {required this.item,
+class ToDoListTask extends StatelessWidget {
+  ToDoListTask(required Type task, 
+      {required this.name,
       required this.completed,
       required this.onListChanged,
-      required this.onDeleteItem})
-      : super(key: ObjectKey(item));
+      required this.onDeleteTask})
+      : super(key: ObjectKey(task));
 
-  final Item item;
+  final Task task;
   final bool completed;
 
   final ToDoListChangedCallback onListChanged;
-  final ToDoListRemovedCallback onDeleteItem;
+  final ToDoListRemovedCallback onDeleteTask;
 
   Color _getColor(BuildContext context) {
     // The theme depends on the BuildContext because different
@@ -42,21 +42,21 @@ class ToDoListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () {
-        onListChanged(item, completed);
+        onListChanged(task, completed);
       },
       onLongPress: completed
           ? () {
-              onDeleteItem(item);
+              onDeleteTask(task);
             }
           : null,
       leading: CircleAvatar(
         backgroundColor: _getColor(context),
         child: Text(
-        item.abbrev(), 
+        task.abbrev(), 
         style: _getTextStyle(context),
       ),
       ),
-      title: Text(item.name)
+      title: Text(task.name)
     );
   }
 }

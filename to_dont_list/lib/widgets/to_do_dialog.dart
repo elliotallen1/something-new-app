@@ -28,7 +28,7 @@ class _ToDoDialogState extends State<ToDoDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Item To Add'),
+      title: const Text('Task To Add'),
       content: TextField(
         onChanged: (value) {
           setState(() {
