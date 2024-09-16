@@ -1,6 +1,7 @@
 // Started with https://docs.flutter.dev/development/ui/widgets-intro
 import 'package:flutter/material.dart';
 import 'package:to_dont_list/objects/task.dart';
+import 'package:to_dont_list/widgets/task_dialog.dart';
 import 'package:to_dont_list/widgets/to_do_tasks.dart';
 import 'package:to_dont_list/widgets/to_do_dialog.dart';
 
@@ -16,25 +17,37 @@ class _ToDoListState extends State<ToDoList> {
   final _TaskSet = <Task>{};
 
   void _handleListChanged(Task task, bool completed) {
-    setState(() {
-      // When a user changes what's in the list, you need
-      // to change _TaskSet inside a setState call to
-      // trigger a rebuild.
-      // The framework then calls build, below,
-      // which updates the visual appearance of the app.
+  setState(() {
+    tasks.remove(task);
+    if (!completed) {
+      // When task is marked as done, open a dialog for rating, description, and "would do again" status
+      showDialog(
+        context: context,
+        builder: (_) {
+          return TaskDialog(
+            task: task,
+            onSave: (rating, description, wouldDoAgain) {
+              // Update task with new details
+              Task updatedTask = task.update(
+                rating: rating,
+                description: description,
+                wouldDoAgain: wouldDoAgain,
+              );
+              setState(() {
+                _TaskSet.add(updatedTask);
+                tasks.add(updatedTask);
+              });
+            },
+          );
+        },
+      );
+    } else {
+      _TaskSet.remove(task);
+      tasks.insert(0, task);
+    }
+  });
+}
 
-      tasks.remove(task);
-      if (!completed) {
-        print("Completing");
-        _TaskSet.add(task);
-        tasks.add(task);
-      } else {
-        print("Making Undone");
-        _TaskSet.remove(task);
-        tasks.insert(0, task);
-      }
-    });
-  }
 
   void _handleDeleteTask(Task task) {
     setState(() {
