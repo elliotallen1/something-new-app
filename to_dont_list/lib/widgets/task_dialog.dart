@@ -2,16 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:to_dont_list/objects/task.dart';
 
 typedef TaskDetailsSaveCallback = Function(int rating, String description, bool wouldDoAgain);
+typedef TaskDetailsCancelCallback = Function(Task task);
 
 class TaskDialog extends StatefulWidget {
   const TaskDialog({
     super.key,
     required this.task,
     required this.onSave,
+    required this.onCancel,
   });
 
   final Task task;
   final TaskDetailsSaveCallback onSave;
+  
+  final TaskDetailsCancelCallback onCancel;
 
   @override
   State<TaskDialog> createState() => _TaskDialogState();
@@ -34,7 +38,6 @@ class _TaskDialogState extends State<TaskDialog> {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Rating input (e.g., using Slider)
           const Text('Rate this task:'),
           Slider(
             value: _rating.toDouble(),
@@ -48,7 +51,6 @@ class _TaskDialogState extends State<TaskDialog> {
               });
             },
           ),
-          // Description input
           TextField(
             decoration: const InputDecoration(labelText: 'Describe the task'),
             onChanged: (value) {
@@ -57,7 +59,6 @@ class _TaskDialogState extends State<TaskDialog> {
               });
             },
           ),
-          // Checkbox for "Would do again"
           CheckboxListTile(
             title: const Text('Would you do this task again?'),
             value: _wouldDoAgain,
@@ -81,6 +82,7 @@ class _TaskDialogState extends State<TaskDialog> {
         ElevatedButton(
           style: noStyle,
           onPressed: () {
+            widget.onCancel(widget.task);
             Navigator.pop(context);
           },
           child: const Text('Cancel'),

@@ -38,6 +38,11 @@ class _ToDoListState extends State<ToDoList> {
                 tasks.add(updatedTask);
               });
             },
+            onCancel: (task) {
+              setState(() {
+              tasks.add(task);
+            });
+            },
           );
         },
       );
