@@ -29,11 +29,11 @@ class _TaskDialogState extends State<TaskDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('How was ${widget.task.name}?'),
+      title: Text(widget.task.name),
       content: Column(
-        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Rate this task:'),
+          const Text('0-5 What would you give it?'),
           Slider(
             value: _rating.toDouble(),
             min: 0,
@@ -47,7 +47,7 @@ class _TaskDialogState extends State<TaskDialog> {
             },
           ),
           TextField(
-            decoration: const InputDecoration(labelText: 'Describe the task'),
+            decoration: const InputDecoration(labelText: 'How was it?'),
             onChanged: (value) {
               setState(() {
                 _description = value;
@@ -55,7 +55,7 @@ class _TaskDialogState extends State<TaskDialog> {
             },
           ),
           CheckboxListTile(
-            title: const Text('Would you do this task again?'),
+            title: const Text('Would you do it again?'),
             value: _wouldDoAgain,
             onChanged: (value) {
               setState(() {

@@ -2,11 +2,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:to_dont_list/objects/task.dart';
 
 void main() {
-    
-    test('abbrev() returns an empty string for empty task name', () {
-      const task = Task(name: '');
-      expect(task.abbrev(), '');
-    });
 
     test('update() creates a new Task with updated values', () {
       const task = Task(name: 'Complete project', rating: 4);

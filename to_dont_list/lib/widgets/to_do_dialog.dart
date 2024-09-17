@@ -22,13 +22,13 @@ class _ToDoDialogState extends State<ToDoDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Add a New Task'),
+      title: const Text('Want to do something new?'),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           TextField(
             controller: _inputController,
-            decoration: const InputDecoration(labelText: 'Task name'),
+            decoration: const InputDecoration(labelText: 'What do you want to do?'),
             onChanged: (value) {
               setState(() {
                 _valueText = value;

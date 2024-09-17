@@ -76,7 +76,7 @@ class ToDoListTask extends StatelessWidget {
               if (task.wouldDoAgain != null) ...[
                 const SizedBox(height: 8),
                 Text(
-                  'Would do again: ${task.wouldDoAgain! ? "Yes" : "No"}',
+                  'Would do again? ${task.wouldDoAgain! ? "Yes" : "No"}',
                 ),
               ],
             ],
