@@ -124,8 +124,7 @@ Widget build(BuildContext context) {
     ),
   );
 }
-
-  }
+}
 
 void main() {
   runApp(MaterialApp(

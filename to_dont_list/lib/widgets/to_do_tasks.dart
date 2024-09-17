@@ -18,42 +18,54 @@ class ToDoListTask extends StatelessWidget {
   final ToDoListChangedCallback onListChanged;
   final ToDoListRemovedCallback onDeleteTask;
 
-  Color _getColor(BuildContext context) {
-    return completed ? Colors.black54 : Theme.of(context).primaryColor;
-  }
-
-  TextStyle? _getTextStyle(BuildContext context) {
-    if (!completed) return null;
-
-    return const TextStyle(
-      color: Colors.black54,
-      decoration: TextDecoration.lineThrough,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      onTap: !completed 
-      ? () {
-        onListChanged(task, completed);
-      }
-      : null,
-      onLongPress: !completed
+    return Center(
+      child: ListTile(
+        onTap: !completed 
           ? () {
-              onDeleteTask(task);
-            }
+            onListChanged(task, completed);
+          }
           : null,
-      leading: CircleAvatar(
-        backgroundColor: _getColor(context),
-        child: Text(
-          task.abbrev(),
-          style: _getTextStyle(context),
+        onLongPress: !completed
+          ? () {
+            onDeleteTask(task);
+          }
+          : null,
+        title: Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            task.name,
+            textAlign: TextAlign.left,
+          ),
         ),
-      ),
-      title: Text(
-        task.name,
-        style: _getTextStyle(context),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (task.rating != null) ...[
+              const SizedBox(height: 8),
+              Text(
+                'Rating: ${task.rating}/5',
+                textAlign: TextAlign.left,
+              ),
+            ],
+            if (task.description != null && task.description!.isNotEmpty) ...[
+              const SizedBox(height: 8),
+              Text(
+                'Description: ${task.description}',
+                textAlign: TextAlign.left,
+              ),
+            ],
+            if (task.wouldDoAgain != null) ...[
+              const SizedBox(height: 8),
+              Text(
+                'Would do again: ${task.wouldDoAgain! ? "Yes" : "No"}',
+                textAlign: TextAlign.left,
+              ),
+            ],
+          ],
+        ),
+        trailing: completed ? const Icon(Icons.check_circle) : null,
       ),
     );
   }
