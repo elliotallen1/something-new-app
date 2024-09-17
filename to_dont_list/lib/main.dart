@@ -12,7 +12,7 @@ class ToDoList extends StatefulWidget {
 }
 
 class _ToDoListState extends State<ToDoList> {
-  final List<Task> tasks = [const Task(name: "add more todos")];
+  final List<Task> tasks = [const Task(name: "add something new you want to do!")];
   final _TaskSet = <Task>{};
 
   void _handleListChanged(Task task, bool completed) {
@@ -122,18 +122,19 @@ class _ToDoListState extends State<ToDoList> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () {
-          showDialog(
-            context: context,
-            builder: (_) {
-              return ToDoDialog(onListAdded: _handleNewTask);
-            },
+      floatingActionButton: Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: FloatingActionButton.extended( 
+      onPressed: () {
+      showDialog(
+        context: context,
+        builder: (_) {
+          return ToDoDialog(onListAdded: _handleNewTask);
+          },
           );
-        },
-      ),
-    );
+          },
+          label: const Text('Wanna do something new?'),),
+),);
   }
 }
 
