@@ -71,7 +71,7 @@ class _ToDoListState extends State<ToDoList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('To Do List'),
+        title: const Text('Something New'),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
@@ -79,11 +79,8 @@ class _ToDoListState extends State<ToDoList> {
           children: [
             Container(
               padding: const EdgeInsets.all(8.0),
-              decoration: const BoxDecoration(
-                border: Border(bottom: BorderSide()),
-              ),
               child: const Text(
-                'To-do',
+                'Try something new?',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
             ),
@@ -103,11 +100,8 @@ class _ToDoListState extends State<ToDoList> {
             ),
             Container(
               padding: const EdgeInsets.all(8.0),
-              decoration: const BoxDecoration(
-                border: Border(top: BorderSide()),
-              ),
               child: const Text(
-                'Done',
+                'Look what you did!',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
             ),
@@ -145,8 +139,9 @@ class _ToDoListState extends State<ToDoList> {
 
 void main() {
   runApp(MaterialApp(
-    title: 'To Do List',
-    theme: ThemeData.from(colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 248, 178, 3))),
+    title: 'Something New',
+    themeMode: ThemeMode.dark,
+    darkTheme: ThemeData.from(colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 234, 19, 220), brightness: Brightness.dark, contrastLevel: 1)),
     home: const ToDoList(),
   ));
 }
