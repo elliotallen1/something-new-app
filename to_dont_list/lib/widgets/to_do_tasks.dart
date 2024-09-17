@@ -50,7 +50,6 @@ class ToDoListTask extends StatelessWidget {
               fontWeight: FontWeight.bold,
               fontSize: 18,
               color: Theme.of(context).colorScheme.onSurface,
-              decoration: completed ? TextDecoration.lineThrough : null,
             ),
           ),
           subtitle: Column(
@@ -58,14 +57,20 @@ class ToDoListTask extends StatelessWidget {
             children: [
               if (task.rating != null) ...[
                 const SizedBox(height: 8),
-                Text(
-                  'Rating: ${task.rating}/5',
+                Row(
+                  children: List.generate(5, (index) {
+                    return Icon(
+                      index < task.rating! ? Icons.star : Icons.star_border,
+                      color: const Color.fromARGB(255, 247, 206, 84),
+                      size: 16,
+                    );
+                  }),
                 ),
               ],
               if (task.description != null && task.description!.isNotEmpty) ...[
                 const SizedBox(height: 8),
-                Text(
-                  'Description: ${task.description}',
+                 Text(
+                  '${task.description}',
                 ),
               ],
               if (task.wouldDoAgain != null) ...[
