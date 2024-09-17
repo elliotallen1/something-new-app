@@ -11,10 +11,6 @@ class Task {
   final String? description;
   final bool? wouldDoAgain;
 
-  String abbrev() {
-    return name.isNotEmpty ? name.substring(0, 1) : '';
-  }
-
   Task update({
     int? rating,
     String? description,
