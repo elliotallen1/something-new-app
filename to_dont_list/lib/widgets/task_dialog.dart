@@ -26,11 +26,6 @@ class _TaskDialogState extends State<TaskDialog> {
   String _description = '';
   bool _wouldDoAgain = false;
 
-  final ButtonStyle yesStyle = ElevatedButton.styleFrom(
-      textStyle: const TextStyle(fontSize: 20), backgroundColor: Colors.green);
-  final ButtonStyle noStyle = ElevatedButton.styleFrom(
-      textStyle: const TextStyle(fontSize: 20), backgroundColor: Colors.red);
-
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -72,7 +67,6 @@ class _TaskDialogState extends State<TaskDialog> {
       ),
       actions: <Widget>[
         ElevatedButton(
-          style: yesStyle,
           onPressed: () {
             widget.onSave(_rating, _description, _wouldDoAgain);
             Navigator.pop(context);
@@ -80,7 +74,6 @@ class _TaskDialogState extends State<TaskDialog> {
           child: const Text('Save'),
         ),
         ElevatedButton(
-          style: noStyle,
           onPressed: () {
             widget.onCancel(widget.task);
             Navigator.pop(context);

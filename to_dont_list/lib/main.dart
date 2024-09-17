@@ -1,4 +1,3 @@
-// Started with https://docs.flutter.dev/development/ui/widgets-intro
 import 'package:flutter/material.dart';
 import 'package:to_dont_list/objects/task.dart';
 import 'package:to_dont_list/widgets/task_dialog.dart';
@@ -17,42 +16,40 @@ class _ToDoListState extends State<ToDoList> {
   final _TaskSet = <Task>{};
 
   void _handleListChanged(Task task, bool completed) {
-  setState(() {
-    tasks.remove(task);
-    if (!completed) {
-      // When task is marked as done, open a dialog for rating, description, and "would do again" status
-      showDialog(
-        context: context,
-        builder: (_) {
-          return TaskDialog(
-            task: task,
-            onSave: (rating, description, wouldDoAgain) {
-              // Update task with new details
-              Task updatedTask = task.update(
-                rating: rating,
-                description: description,
-                wouldDoAgain: wouldDoAgain,
-              );
-              setState(() {
-                _TaskSet.add(updatedTask);
-                tasks.add(updatedTask);
-              });
-            },
-            onCancel: (task) {
-              setState(() {
-              tasks.add(task);
-            });
-            },
-          );
-        },
-      );
-    } else {
-      _TaskSet.remove(task);
-      tasks.insert(0, task);
-    }
-  });
-}
-
+    setState(() {
+      tasks.remove(task);
+      if (!completed) {
+        showDialog(
+          context: context,
+          builder: (_) {
+            return TaskDialog(
+              task: task,
+              onSave: (rating, description, wouldDoAgain) {
+                // Update task with new details
+                Task updatedTask = task.update(
+                  rating: rating,
+                  description: description,
+                  wouldDoAgain: wouldDoAgain,
+                );
+                setState(() {
+                  _TaskSet.add(updatedTask);
+                  tasks.add(updatedTask);
+                });
+              },
+              onCancel: (task) {
+                setState(() {
+                  tasks.add(task);
+                });
+              },
+            );
+          },
+        );
+      } else {
+        _TaskSet.remove(task);
+        tasks.insert(0, task);
+      }
+    });
+  }
 
   void _handleDeleteTask(Task task) {
     setState(() {
@@ -70,60 +67,80 @@ class _ToDoListState extends State<ToDoList> {
     });
   }
 
-@override
-Widget build(BuildContext context) {
-  return Scaffold(
-    appBar: AppBar(
-      title: const Text('Something New'),
-    ),
-    body: ListView(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      children: [
-        const Text('To-do'),
-        Column(
-          children: tasks.map((task) {
-            if (!_TaskSet.contains(task)) {
-              return ToDoListTask(
-                task: task,
-                completed: false,
-                onListChanged: _handleListChanged,
-                onDeleteTask: _handleDeleteTask,
-              );
-            } else {
-              return Container();
-            }
-          }).toList(),
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('To Do List'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
+        child: ListView(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(8.0),
+              decoration: const BoxDecoration(
+                border: Border(bottom: BorderSide()),
+              ),
+              child: const Text(
+                'To-do',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ),
+            Column(
+              children: tasks.map((task) {
+                if (!_TaskSet.contains(task)) {
+                  return ToDoListTask(
+                    task: task,
+                    completed: false,
+                    onListChanged: _handleListChanged,
+                    onDeleteTask: _handleDeleteTask,
+                  );
+                } else {
+                  return Container();
+                }
+              }).toList(),
+            ),
+            Container(
+              padding: const EdgeInsets.all(8.0),
+              decoration: const BoxDecoration(
+                border: Border(top: BorderSide()),
+              ),
+              child: const Text(
+                'Done',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ),
+            Column(
+              children: tasks.map((task) {
+                if (_TaskSet.contains(task)) {
+                  return ToDoListTask(
+                    task: task,
+                    completed: true,
+                    onListChanged: _handleListChanged,
+                    onDeleteTask: _handleDeleteTask,
+                  );
+                } else {
+                  return Container();
+                }
+              }).toList(),
+            ),
+          ],
         ),
-        const Text('Done'),
-        Column(
-          children: tasks.map((task) {
-            if (_TaskSet.contains(task)) {
-              return ToDoListTask(
-                task: task,
-                completed: true,
-                onListChanged: _handleListChanged,
-                onDeleteTask: _handleDeleteTask,
-              );
-            } else {
-              return Container();
-            }
-          }).toList(),
-        ),
-      ],
-    ),
-    floatingActionButton: FloatingActionButton(
-      child: const Icon(Icons.add),
-      onPressed: () {
-        showDialog(
-          context: context,
-          builder: (_) {
-            return ToDoDialog(onListAdded: _handleNewTask);
-          },
-        );
-      },
-    ),
-  );
-}
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (_) {
+              return ToDoDialog(onListAdded: _handleNewTask);
+            },
+          );
+        },
+      ),
+    );
+  }
 }
 
 void main() {
