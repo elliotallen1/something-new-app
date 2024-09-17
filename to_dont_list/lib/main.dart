@@ -28,7 +28,6 @@ class _ToDoListState extends State<ToDoList> {
 
   void _handleListChanged(Task task, bool completed) {
     setState(() {
-      tasks.remove(task);
       if (!completed) {
         showDialog(
           context: context,
@@ -43,13 +42,9 @@ class _ToDoListState extends State<ToDoList> {
                   wouldDoAgain: wouldDoAgain,
                 );
                 setState(() {
+                  tasks.remove(task);
                   _taskSet.add(updatedTask);
                   tasks.add(updatedTask);
-                });
-              },
-              onCancel: (task) {
-                setState(() {
-                  tasks.add(task);
                 });
               },
             );

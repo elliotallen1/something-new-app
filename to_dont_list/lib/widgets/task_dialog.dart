@@ -9,13 +9,11 @@ class TaskDialog extends StatefulWidget {
     super.key,
     required this.task,
     required this.onSave,
-    required this.onCancel,
   });
 
   final Task task;
   final TaskDetailsSaveCallback onSave;
   
-  final TaskDetailsCancelCallback onCancel;
 
   @override
   State<TaskDialog> createState() => _TaskDialogState();
@@ -75,7 +73,6 @@ class _TaskDialogState extends State<TaskDialog> {
         ),
         ElevatedButton(
           onPressed: () {
-            widget.onCancel(widget.task);
             Navigator.pop(context);
           },
           child: const Text('Cancel'),

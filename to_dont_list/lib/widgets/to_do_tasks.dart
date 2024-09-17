@@ -39,11 +39,7 @@ class ToDoListTask extends StatelessWidget {
                   onListChanged(task, completed);
                 }
               : null,
-          onLongPress: !completed
-              ? () {
-                  onDeleteTask(task);
-                }
-              : null,
+          onLongPress: () {onDeleteTask(task);},
           title: Text(
             task.name,
             style: TextStyle(
