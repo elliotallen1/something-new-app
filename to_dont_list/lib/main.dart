@@ -12,8 +12,19 @@ class ToDoList extends StatefulWidget {
 }
 
 class _ToDoListState extends State<ToDoList> {
-  final List<Task> tasks = [const Task(name: "add something new you want to do!")];
-  final _TaskSet = <Task>{};
+    final List<Task> tasks = [
+    const Task(name: "Read a book"),
+    const Task(name: "Go for a run"),
+    const Task(name: "Cook a new recipe"),
+    const Task(name: "Learn Dart", rating: 4, description: "Studied Dart programming.", wouldDoAgain: true),
+    const Task(name: "Finish Flutter Tutorial", rating: 5, description: "Completed the Flutter tutorial.", wouldDoAgain: true),
+
+  ];
+
+  final _taskSet = <Task>{
+    const Task(name: "Learn Dart", rating: 4, description: "Studied Dart programming.", wouldDoAgain: true),
+    const Task(name: "Finish Flutter Tutorial", rating: 5, description: "Completed the Flutter tutorial.", wouldDoAgain: true),
+  };
 
   void _handleListChanged(Task task, bool completed) {
     setState(() {
@@ -32,7 +43,7 @@ class _ToDoListState extends State<ToDoList> {
                   wouldDoAgain: wouldDoAgain,
                 );
                 setState(() {
-                  _TaskSet.add(updatedTask);
+                  _taskSet.add(updatedTask);
                   tasks.add(updatedTask);
                 });
               },
@@ -45,7 +56,7 @@ class _ToDoListState extends State<ToDoList> {
           },
         );
       } else {
-        _TaskSet.remove(task);
+        _taskSet.remove(task);
         tasks.insert(0, task);
       }
     });
@@ -53,14 +64,12 @@ class _ToDoListState extends State<ToDoList> {
 
   void _handleDeleteTask(Task task) {
     setState(() {
-      print("Deleting Task");
       tasks.remove(task);
     });
   }
 
   void _handleNewTask(String taskText, TextEditingController textController) {
     setState(() {
-      print("Adding new Task");
       Task task = Task(name: taskText);
       tasks.insert(0, task);
       textController.clear();
@@ -86,7 +95,7 @@ class _ToDoListState extends State<ToDoList> {
             ),
             Column(
               children: tasks.map((task) {
-                if (!_TaskSet.contains(task)) {
+                if (!_taskSet.contains(task)) {
                   return ToDoListTask(
                     task: task,
                     completed: false,
@@ -107,7 +116,7 @@ class _ToDoListState extends State<ToDoList> {
             ),
             Column(
               children: tasks.map((task) {
-                if (_TaskSet.contains(task)) {
+                if (_taskSet.contains(task)) {
                   return ToDoListTask(
                     task: task,
                     completed: true,
