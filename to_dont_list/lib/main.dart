@@ -13,7 +13,7 @@ class ToyList extends StatefulWidget {
 }
 
 class _ToyListState extends State<ToyList> {
-  final List<Toy> items = [Toy(name: "Legacy Core Optimus Prime", color: SideColor.a.rgbcolor)];
+  final List<Toy> items = [Toy(name: "Legacy Core Optimus Prime", color: Faction.a.color)];
   final _itemSet = <Toy>{};
 
   void _handleListChanged(Toy item, bool completed) {

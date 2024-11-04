@@ -22,7 +22,7 @@ void main() {
     await tester.pumpWidget(MaterialApp(
         home: Scaffold(
             body: ToyListItem(
-                toy: Toy(name: "test", color: SideColor.a.rgbcolor),
+                toy: Toy(name: "test", color: Faction.a.color),
                 got: true,
                 onListChanged: (Toy item, bool got) {},
                 onDeleteItem: (Toy item) {}))));
@@ -38,7 +38,7 @@ void main() {
     await tester.pumpWidget(MaterialApp(
         home: Scaffold(
             body: ToyListItem(
-                toy: Toy(name: "test", color: SideColor.o.rgbcolor),
+                toy: Toy(name: "test", color: Faction.o.color),
                 got: false,
                 onListChanged: (Toy item, bool got) {},
                 onDeleteItem: (Toy item) {}))));
@@ -48,7 +48,7 @@ void main() {
 
     // Use the `findsOneWidget` matcher provided by flutter_test to verify
     // that the Text widgets appear exactly once in the widget tree.
-    expect(circ.backgroundColor, SideColor.o.rgbcolor);
+    expect(circ.backgroundColor, Faction.o.color);
   });
 
   testWidgets('Default ToyList has one item', (tester) async {
@@ -63,7 +63,7 @@ void main() {
     await tester.pumpWidget(const MaterialApp(home: ToyList()));
     final avatarFinder = find.byType(CircleAvatar);
     CircleAvatar circ = tester.firstWidget(avatarFinder);
-    expect(circ.backgroundColor, SideColor.a.rgbcolor); 
+    expect(circ.backgroundColor, Faction.a.color); 
   });
 
   testWidgets('ToyDialog has a DropDownMenu', (tester) async {
