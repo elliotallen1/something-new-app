@@ -22,7 +22,7 @@ void main() {
     await tester.pumpWidget(MaterialApp(
         home: Scaffold(
             body: ToyListItem(
-                toy: Toy(name: "test", color: Faction.a.color),
+                toy: Toy(name: "test", faction: Faction.a),
                 got: true,
                 onListChanged: (Toy item, bool got) {},
                 onDeleteItem: (Toy item) {}))));
@@ -33,22 +33,26 @@ void main() {
     expect(textFinder, findsOneWidget);
   });
 
-  testWidgets('ToyItem has a Circle Avatar with a color to match',
-      (tester) async {
+  testWidgets('ToyItem has a Circle Avatar with a color and image to match', (tester) async {
     await tester.pumpWidget(MaterialApp(
         home: Scaffold(
             body: ToyListItem(
-                toy: Toy(name: "test", color: Faction.o.color),
+                toy: Toy(name: "test", faction: Faction.o),
                 got: false,
                 onListChanged: (Toy item, bool got) {},
                 onDeleteItem: (Toy item) {}))));
+  
     final avatarFinder = find.byType(CircleAvatar);
 
     CircleAvatar circ = tester.firstWidget(avatarFinder);
 
-    // Use the `findsOneWidget` matcher provided by flutter_test to verify
+    // Use the findsOneWidget matcher provided by flutter_test to verify
     // that the Text widgets appear exactly once in the widget tree.
     expect(circ.backgroundColor, Faction.o.color);
+  
+    // Check that the foreground image is of type AssetImage and has the correct asset path
+    final foregroundImage = circ.foregroundImage as AssetImage;
+    expect(foregroundImage.assetName, 'assets/images/QuestionMark.png');
   });
 
   testWidgets('Default ToyList has one item', (tester) async {
@@ -70,7 +74,7 @@ void main() {
     await tester.pumpWidget(const MaterialApp(home: ToyList()));
     await tester.tap(find.byType(FloatingActionButton));
     await tester.pump();
-    final dropDownFinder = find.text('Faction');
+    final dropDownFinder = find.text('Autobot');
     expect(dropDownFinder, findsOneWidget);
   });
 
