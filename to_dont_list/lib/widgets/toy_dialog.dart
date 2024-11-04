@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:to_dont_list/objects/toy.dart';
 
-
-
-typedef ToyListAddedCallback = Function(
-    String value, Color color, TextEditingController textConroller);
+typedef ToyListAddedCallback = Function(String value, Faction faction, TextEditingController textController);
 
 class ToyDialog extends StatefulWidget {
   const ToyDialog({
@@ -19,16 +16,13 @@ class ToyDialog extends StatefulWidget {
 }
 
 class _ToyDialogState extends State<ToyDialog> {
-  // Dialog with text from https://www.appsdeveloperblog.com/alert-dialog-with-a-text-field-in-flutter/
   final TextEditingController _inputController = TextEditingController();
-  final TextEditingController _colorController = TextEditingController();
+  Faction selectedFaction = Faction.a;
+
   final ButtonStyle noStyle = ElevatedButton.styleFrom(
       textStyle: const TextStyle(fontSize: 20), backgroundColor: Colors.red);
   final ButtonStyle yesStyle = ElevatedButton.styleFrom(
       textStyle: const TextStyle(fontSize: 20), backgroundColor: Colors.green);
-  Faction? selectedFaction = Faction.a;
-
-  String valueText = "";
 
   @override
   Widget build(BuildContext context) {
@@ -38,46 +32,35 @@ class _ToyDialogState extends State<ToyDialog> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           TextField(
-            onChanged: (value) {
-              setState(() {
-                valueText = value;
-              });
-            },
             controller: _inputController,
             decoration: const InputDecoration(hintText: "Type toy name here"),
           ),
           const SizedBox(height: 12),
-          DropdownMenu<Faction>(
-            initialSelection: Faction.a,
-            controller: _colorController,
-            label: const Text('Faction'),
-            onSelected: (Faction? color) {
+          DropdownButton<Faction>(
+            value: selectedFaction,
+            onChanged: (Faction? faction) {
               setState(() {
-                selectedFaction = color;
+                selectedFaction = faction!;
               });
             },
-            dropdownMenuEntries: Faction.values.map<DropdownMenuEntry<Faction>>((Faction color) {
-              return DropdownMenuEntry<Faction>(
-                value: color,
-                label: color.label,
+            items: Faction.values.map<DropdownMenuItem<Faction>>((Faction faction) {
+              return DropdownMenuItem<Faction>(
+                value: faction,
+                child: Text(faction.label),
               );
             }).toList(),
           ),
-        ]  
-      ), 
+        ],
+      ),
       actions: <Widget>[
         ElevatedButton(
           key: const Key("CancelButton"),
           style: noStyle,
           child: const Text('Cancel'),
           onPressed: () {
-            setState(() {
-              Navigator.pop(context);
-            });
+            Navigator.pop(context);
           },
         ),
-
-        // https://stackoverflow.com/questions/52468987/how-to-turn-disabled-button-into-enabled-button-depending-on-conditions
         ValueListenableBuilder<TextEditingValue>(
           valueListenable: _inputController,
           builder: (context, value, child) {
@@ -86,10 +69,8 @@ class _ToyDialogState extends State<ToyDialog> {
               style: yesStyle,
               onPressed: value.text.isNotEmpty
                   ? () {
-                      setState(() {
-                        widget.onListAdded(valueText, selectedFaction!.color, _inputController);
-                        Navigator.pop(context);
-                      });
+                      widget.onListAdded(value.text, selectedFaction, _inputController);
+                      Navigator.pop(context);
                     }
                   : null,
               child: const Text('OK'),

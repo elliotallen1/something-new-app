@@ -48,9 +48,12 @@ class ToyListItem extends StatelessWidget {
               onDeleteItem(toy);
             }
           : null,
-      leading: got ? null : CircleAvatar(
-        backgroundColor: toy.color,
-      ),
+      leading: got
+          ? null
+          : CircleAvatar(
+              backgroundColor: toy.faction.color,
+              foregroundImage: toy.faction.image.image,
+            ),
       title: Text(
         toy.name,
         style: _getTextStyle(context),

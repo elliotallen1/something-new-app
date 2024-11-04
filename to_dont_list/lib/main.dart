@@ -13,7 +13,7 @@ class ToyList extends StatefulWidget {
 }
 
 class _ToyListState extends State<ToyList> {
-  final List<Toy> items = [Toy(name: "Legacy Core Optimus Prime", color: Faction.a.color)];
+  final List<Toy> items = [Toy(name: "Legacy Core Optimus Prime", faction: Faction.a)];
   final _itemSet = <Toy>{};
 
   void _handleListChanged(Toy item, bool completed) {
@@ -44,14 +44,15 @@ class _ToyListState extends State<ToyList> {
     });
   }
 
-  void _handleNewItem(String itemText, Color itemColor, TextEditingController textController) {
-    setState(() {
-      print("Adding new item");
-      Toy item = Toy(name: itemText, color:itemColor);
-      items.insert(0, item);
-      textController.clear();
-    });
-  }
+  void _handleNewItem(String itemText, Faction faction, TextEditingController textController) {
+  setState(() {
+    print("Adding new item");
+    Toy item = Toy(name: itemText, faction: faction);
+    items.insert(0, item);
+    textController.clear();
+  });
+}
+
 
   @override
   Widget build(BuildContext context) {
